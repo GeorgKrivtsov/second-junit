@@ -24,7 +24,7 @@
         <webdrivermanager.version>5.3.1</webdrivermanager.version>
         <selenium-java.version>4.3.0</selenium-java.version>
         <junit-jupiter.version>5.8.2</junit-jupiter.version>
-        <junit-platform-runner.version>1.7.0</junit-platform-runner.version>
+        <junit-platform-launcher.version>1.9.1</junit-platform-launcher.version>
 
     </properties>
 
@@ -50,20 +50,29 @@
             <version>${junit-jupiter.version}</version>
         </dependency>
 
-        <!-- https://mvnrepository.com/artifact/org.junit.platform/junit-platform-runner -->
+<!--        &lt;!&ndash; https://mvnrepository.com/artifact/org.junit.platform/junit-platform-runner &ndash;&gt;-->
+<!--        <dependency>-->
+<!--            <groupId>org.junit.platform</groupId>-->
+<!--            <artifactId>junit-platform-runner</artifactId>-->
+<!--            <version>${junit-platform-runner.version}</version>-->
+<!--            <scope>test</scope>-->
+<!--        </dependency>-->
+
+        <!-- https://mvnrepository.com/artifact/org.junit.platform/junit-platform-launcher -->
         <dependency>
             <groupId>org.junit.platform</groupId>
-            <artifactId>junit-platform-runner</artifactId>
-            <version>${junit-platform-runner.version}</version>
+            <artifactId>junit-platform-launcher</artifactId>
+            <version>${junit-platform-launcher.version}</version>
             <scope>test</scope>
         </dependency>
+
 
     </dependencies>
 
     <build>
         <plugins>
 
-            <!--      Плагин, который отвечает за компиляцию кактестов так и в целом всех Java-классов      -->
+            <!--      Плагин, который отвечает за компиляцию как тестов так и в целом всех Java-классов      -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
@@ -84,9 +93,19 @@
                     <testFailureIgnore>true</testFailureIgnore>
                     <failIfNoTests>false</failIfNoTests>
 <!--                    <groups>Smoke</groups>-->
-<!--                    <includes>-->
-<!--                        <include>**/*Test.java</include>-->
-<!--                    </includes>-->
+                    <includes>
+                        <include>**/*Test.java</include>
+                    </includes>
+                    <argLine>
+                        -Xmx1024m
+                        -Dfile.encoding=${encoding.type}
+                    </argLine>
+                    <systemProperties>
+                        <property>
+                            <name>junit.jupiter.extensions.autodetection.enabled</name>
+                            <value>true</value>
+                        </property>
+                    </systemProperties>
                 </configuration>
 <!--                <dependencies>-->
 <!--                    <dependency>-->
